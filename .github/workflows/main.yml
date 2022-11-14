@@ -6,11 +6,14 @@ on:
     paths:
       - 'HybridNativeApiSample/**/*'
       - '.github/workflows/main.yml' 
-
+      
+env:
+  PROJECT_PATH: " HybridNativeApiSample/HybridNativeApiSample.csproj"
+  
 jobs:
   build_blazor:
     runs-on: windows-2022
-    
+    name: Android & windows Build
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -21,12 +24,36 @@ jobs:
       uses: actions/setup-dotnet@v2.1.0
       with:
         dotnet-version: '7.0.x'
+        
+    - name: Generate version number using date and run number
+      shell: pwsh
+      id: version-creator
+      run: |
+         $buildDay = Get-Date -Format "yyyy.Mdd"
+         $ver = $buildDay + "." + $env:GITHUB_RUN_NUMBER + ".0"
+         echo "::set-output name=APP_VERSION::$ver"
 
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
       
     - name: Restore Dependencies
-      run: dotnet restore HybridNativeApiSample/HybridNativeApiSample.csproj
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+           
+    - name: Build MAUI Android
+      run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net7.0-android --no-restore
       
-    - name: Build Solution
-      run: dotnet build HybridNativeApiSample/HybridNativeApiSample.csproj --no-restore --configuration Release
+    - name: Upload Android Artifact
+      uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+      with:
+        name: HybridNativeApiSample-android-ci-build
+        path: HybridNativeApiSample/bin/Release/net6.0-android/*Signed.a*
+        
+    - name: Build Windows Artifact
+      run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net7.0-windows10.0.19041.0
+
+    - name: Upload Windows Artifact
+      uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+      with:
+        name: HybridNativeApiSample-windows-ci-build
+        path: HybridNativeApiSample/bin/Release/net7.0-windows10.0.19041.0/win10-x64/AppPackages/HybridNativeApiSample*/HybridNativeApiSample*.msix
+        
