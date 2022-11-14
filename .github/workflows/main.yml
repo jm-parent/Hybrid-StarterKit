@@ -46,7 +46,7 @@ jobs:
       uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
       with:
         name: HybridNativeApiSample-android-ci-build
-        path: HybridNativeApiSample/bin/Release/net6.0-android/*Signed.a*
+        path: HybridNativeApiSample/bin/Release/net7.0-android/*Signed.a*
         
     - name: Build Windows Artifact
       run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net7.0-windows10.0.19041.0
@@ -57,3 +57,46 @@ jobs:
         name: HybridNativeApiSample-windows-ci-build
         path: HybridNativeApiSample/bin/Release/net7.0-windows10.0.19041.0/win10-x64/AppPackages/HybridNativeApiSample*/HybridNativeApiSample*.msix
         
+# MAUI iOS Build
+  build-ios:
+    runs-on: macos-12
+    name: iOS Build
+    steps:
+      - name: Setup .NET 7
+        uses: actions/setup-dotnet@4d4a70f4a5b2a5a5329f13be4ac933f2c9206ac0
+        with:
+          dotnet-version: 7.0.x
+          
+      - name: Generate version number using date and run number
+        id: version-creator
+        shell: bash
+        run: |
+          buildDay=`date +%Y.%m%d`
+          echo $buildDay
+          runNum=${{ env.GITHUB_RUN_NUMBER }}
+          ver="${buildDay}.${runNum}.0"
+          echo $ver
+          echo "APP_VERSION=$ver" >> $GITHUB_ENV
+          
+      - name: Install MAUI Workload
+        run: dotnet workload install maui --ignore-failed-sources
+      - name: Restore Dependencies
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+        
+      - name: Build MAUI iOS
+        run: dotnet build ${{ env.PROJECT_PATH }} -c Release -f net7.0-ios /p:buildForSimulator=True /p:packageApp=True /p:ArchiveOnBuild=False
+
+      - name: Upload iOS Artifact
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        with:
+          name: HybridNativeApiSample-ios-ci-build
+          path: HybridNativeApiSample/bin/Release/net7.0-ios/iossimulator-x64/**/*.app
+          
+      - name: Build MAUI MacCatalyst
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net7.0-maccatalyst -p:BuildIpa=True
+
+      - name: Upload MacCatalyst Artifact
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        with:
+          name: HybridNativeApiSample-macos-ci-build
+          path: HybridNativeApiSample/bin/Release/net7.0-maccatalyst/publish/*.pkg
