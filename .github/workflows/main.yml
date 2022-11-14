@@ -24,6 +24,9 @@ jobs:
 
     - name: Install MAUI Workload
       run: dotnet workload install maui --ignore-failed-sources
-        
+      
+    - name: Restore Dependencies
+      run: dotnet restore HybridNativeApiSample/HybridNativeApiSample.csproj
+      
     - name: Build Solution
       run: dotnet build HybridNativeApiSample/HybridNativeApiSample.csproj --no-restore --configuration Release
