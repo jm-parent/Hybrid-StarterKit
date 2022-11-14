@@ -2,11 +2,10 @@ name: Build Blazor Application
 
 on:
   push:
-    branches:
-      - main
+    branches: [ master ]
     paths:
-      - 'src/Blazor/**/*'
-      - '.github/workflows/main_build-blazor.yml' 
+      - 'Hybrid-StarterKit/HybridNativeApiSample/**/*'
+      - '.github/workflows/main.yml' 
 
 jobs:
   build_blazor:
@@ -24,4 +23,4 @@ jobs:
         dotnet-version: '7.0.x'
 
     - name: Build Solution
-      run: dotnet build Hybrid-StarterKit\HybridNativeApiSample\HybridNativeApiSample.csproj --no-restore --configuration Release
+      run: dotnet build Hybrid-StarterKit/HybridNativeApiSample/HybridNativeApiSample.csproj --no-restore --configuration Release
