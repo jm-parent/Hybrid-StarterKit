@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'Hybrid-StarterKit/HybridNativeApiSample/**/*'
+      - 'HybridNativeApiSample/**/*'
       - '.github/workflows/main.yml' 
 
 jobs:
@@ -23,4 +23,4 @@ jobs:
         dotnet-version: '7.0.x'
 
     - name: Build Solution
-      run: dotnet build Hybrid-StarterKit/HybridNativeApiSample/HybridNativeApiSample.csproj --no-restore --configuration Release
+      run: dotnet build HybridNativeApiSample/HybridNativeApiSample.csproj --no-restore --configuration Release
