@@ -54,4 +54,8 @@
         <PackageReference Include="MudBlazor" Version="6.0.18" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BlazorApp-Empty\BlazorApp-Empty.csproj" />
+    </ItemGroup>
+
 </Project>

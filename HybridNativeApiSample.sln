@@ -4,6 +4,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridNativeApiSample", "HybridNativeApiSample\HybridNativeApiSample.csproj", "{4AEE9E12-FE30-4233-8172-A8F942EAD4BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp-Empty", "BlazorApp-Empty\BlazorApp-Empty.csproj", "{70F1CC5F-3862-46D4-A885-09BC37AC12EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,12 +18,16 @@ Global
 		{4AEE9E12-FE30-4233-8172-A8F942EAD4BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AEE9E12-FE30-4233-8172-A8F942EAD4BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4AEE9E12-FE30-4233-8172-A8F942EAD4BC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{70F1CC5F-3862-46D4-A885-09BC37AC12EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70F1CC5F-3862-46D4-A885-09BC37AC12EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70F1CC5F-3862-46D4-A885-09BC37AC12EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70F1CC5F-3862-46D4-A885-09BC37AC12EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {80B04975-275E-4B66-B92B-0426FA6FF8FE}
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 	EndGlobalSection
 EndGlobal
